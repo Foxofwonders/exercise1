@@ -2,12 +2,12 @@ package nl.ru.ai.exercise1;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Exercise1
 {
   private static final String DATABASE_FILENAME="songs.txt";
-  private static final int MAX_NR_OF_TRACKS=5000;
   /*
    * Here we go
    */
@@ -15,7 +15,7 @@ public class Exercise1
   {
     try
     {
-      Track[] database=new Track[MAX_NR_OF_TRACKS];
+      ArrayList <Track> database = new ArrayList <Track>();
       /*
        * Read database
        */
@@ -33,31 +33,31 @@ public class Exercise1
       switch(method)
       {
         case BUBBLE_SORT:
-          bubbleSort(database,length);
+          bubbleSort(database);
           break;
         case INSERTION_SORT:
-          insertionSort(database,length);
+          insertionSort(database);
           break;
         case SELECTION_SORT:
-          selectionSort(database,length);
+          selectionSort(database);
           break;
       }
       System.out.println("Sorted!");
       /*
        * Show result
        */
-      dumpDatabase(database,length);
+      dumpDatabase(database);
     }
     catch(FileNotFoundException exception)
     {
       System.out.printf("Error opening database file '%s': file not found\n",DATABASE_FILENAME);
     }
   }
-  private static void dumpDatabase(Track[] database, int length)
+  private static void dumpDatabase(ArrayList <Track> database)
   {
-    for(int i=0;i<length;i++)
+    for(int i=0;i<database.size();i++)
     {
-      System.out.printf("%-26s %-32s %4d %s\n",database[i].artist,database[i].cd,database[i].track,database[i].time);
+      System.out.printf("%-26s %-32s %4d %s\n",database.get(i).artist,database.get(i).cd,database.get(i).track,database.get(i).time);
     }
   }
   /**
@@ -93,11 +93,10 @@ public class Exercise1
    * @return number of tracks read
    * @throws FileNotFoundException 
    */
-  static int readDatabase(Track[] database) throws FileNotFoundException
+  static int readDatabase(ArrayList <Track> database) throws FileNotFoundException
   {
     FileInputStream inputStream=new FileInputStream(DATABASE_FILENAME);
     Scanner scanner=new Scanner(inputStream);
-    int numberOfTracks=0;
     while(scanner.hasNext())
     {
       Track track=new Track();
@@ -111,11 +110,10 @@ public class Exercise1
       track.tags=scanner.nextLine();
       track.time=new Length(scanner.nextLine());
       track.country=scanner.nextLine();
-      database[numberOfTracks]=track;
-      numberOfTracks++;
+      database.add(track);
     }
     scanner.close();
-    return numberOfTracks;
+    return database.size();
   }
   /*************** Auxiliary array routines from lecture ***************/
   /**
@@ -124,12 +122,12 @@ public class Exercise1
    * @param slice
    * @return true if the slice of the array is in ascending order, false otherwise
    */
-  static <T extends Comparable<T>> boolean isSorted(T[] array, Slice slice)
+  static <T extends Comparable<T>> boolean isSorted(ArrayList <T> array, Slice slice)
   {
     assert array!=null : "Array should be initialized";
     assert slice.isValid() : "Slice should be valid";
     for(int i=slice.from;i<slice.upto-1;i++)
-      if(array[i].compareTo(array[i+1])>0)
+      if(array.get(i).compareTo(array.get(i+1))>0)
         return false;
     return true;
   }
@@ -140,13 +138,13 @@ public class Exercise1
    * @param y element for which the position should be returned
    * @return position where to insert
    */
-  static <T extends Comparable<T>> int findInsertPosition(T[] array, Slice slice, T y)
+  static <T extends Comparable<T>> int findInsertPosition(ArrayList <T> array, Slice slice, T y)
   {
     assert array!=null : "Array should be initialized";
     assert slice.isValid() : "Slice should be valid";
     assert isSorted(array,slice);
     for(int i=slice.from;i<slice.upto;i++)
-      if(array[i].compareTo(y)>=0)
+      if(array.get(i).compareTo(y)>=0)
         return i;
     return slice.upto;
   }
@@ -155,12 +153,12 @@ public class Exercise1
    * @param array
    * @param slice
    */
-  static <T extends Comparable<T>> void shiftRight(T[] array, Slice slice)
+  static <T extends Comparable<T>> void shiftRight(ArrayList <T> array, Slice slice)
   {
     assert array!=null : "Array should be initialized";
-    assert slice.isValid()&&slice.from<array.length : "Slice should be valid";
+    assert slice.isValid()&&slice.from<array.size() : "Slice should be valid";
     for(int i=slice.upto;i>slice.from;i--)
-      array[i]=array[i-1];
+      array.set(i,array.get(i-1));
   }
   /**
    * Insert an element to a sorted array and keep it sorted
@@ -169,15 +167,15 @@ public class Exercise1
    * @param y element to be added
    * @return new length
    */
-  static <T extends Comparable<T>> int insert(T[] array, int length, T y)
+  static <T extends Comparable<T>> int insert(ArrayList <T> array, int length, T y)
   {
-    assert array!=null : "Array should be initialized";
-    assert length>=0 : "Length cannot be negative";
-    assert isSorted(array,new Slice(0,length)) : "Array should be sorted";
+    assert array!=null : "ArrayList should be initialized";
+    assert array.size()>=0 : "Length cannot be negative";
+    assert isSorted(array,new Slice(0,length)) : "ArrayList should be sorted";
     int position=findInsertPosition(array,new Slice(0,length),y);
     shiftRight(array,new Slice(position,length));
-    array[position]=y;
-    return length+1;
+    array.set(position,y);
+    return array.size()+1;
   }
   /**
    * Swap two elements in an array
@@ -185,14 +183,14 @@ public class Exercise1
    * @param i
    * @param j
    */
-  private static <T extends Comparable<T>> void swap(T[] array, int i, int j)
+  private static <T extends Comparable<T>> void swap(ArrayList <T> array, int i, int j)
   {
     assert array!=null : "Array should be initialized";
-    assert i>=0&&i<array.length : "First index is invalid";
-    assert j>=0&&j<array.length : "Second index is invalid";
-    T help=array[i];
-    array[i]=array[j];
-    array[j]=help;
+    assert i>=0&&i<array.size() : "First index is invalid";
+    assert j>=0&&j<array.size() : "Second index is invalid";
+    T help=array.get(i);
+    array.set(i, array.get(j));
+    array.set(j, help);
   }
   /*************** Array based Sorting routines from lecture ***************/
   /**
@@ -200,12 +198,12 @@ public class Exercise1
    * @param array
    * @oaram length
    */
-  static <T extends Comparable<T>> void selectionSort(T[] array, int length)
+  static <T extends Comparable<T>> void selectionSort(ArrayList <T> array)
   {
     assert array!=null : "array should be initialized";
-    for(int i=0;i<length;i++)
+    for(int i=0;i<array.size();i++)
     {
-      int j=indexOfSmallestValue(array,new Slice(i,length));
+      int j=indexOfSmallestValue(array,new Slice(i,array.size()));
       swap(array,i,j);
     }
   }
@@ -215,14 +213,14 @@ public class Exercise1
    * @param slice
    * @return index of smallest value
    */
-  static <T extends Comparable<T>> int indexOfSmallestValue(T[] array, Slice slice)
+  static <T extends Comparable<T>> int indexOfSmallestValue(ArrayList <T> array, Slice slice)
   {
     assert array!=null : "Array should be initialized";
-    assert slice.isValid()&&slice.upto<=array.length : "Slice should be valid";
+    assert slice.isValid()&&slice.upto<=array.size() : "Slice should be valid";
     assert slice.upto-slice.from>0 : "Slice should be non-empty";
     int index=slice.from;
     for(int i=slice.from+1;i<slice.upto;i++)
-      if(array[i].compareTo(array[index])<0)
+      if(array.get(i).compareTo(array.get(index))<0)
         index=i;
     return index;
   }
@@ -231,10 +229,11 @@ public class Exercise1
    * @param array
    * @param length
    */
-  static <T extends Comparable<T>> void bubbleSort(T[] array, int length)
+  static <T extends Comparable<T>> void bubbleSort(ArrayList <Track> database)
   {
-    assert array!=null : "array should be initialized";
-    while(!bubble(array,new Slice(0,length)))
+    assert database!=null : "ArrayList should be initialized";
+    int length = database.size();
+    while(!bubble(database,new Slice(0,length)))
         length--;
   }
   /**
@@ -243,15 +242,15 @@ public class Exercise1
    * @param slice
    * @return array slice is sorted
    */
-  static <T extends Comparable<T>> boolean bubble(T[] array, Slice slice)
+  static <T extends Comparable<T>> boolean bubble(ArrayList <Track> database, Slice slice)
   {
-    assert array!=null : "Array should be initialized";
-    assert slice.isValid()&&slice.upto<=array.length : "Slice should be valid";
+    assert database!=null : "ArrayList should be initialized";
+    assert slice.isValid()&&slice.upto<=database.size() : "Slice should be valid";
     boolean isSorted=true;
     for(int i=slice.from;i<slice.upto-1;i++)
-      if(array[i].compareTo(array[i+1])>0)
+      if(database.get(i).compareTo(database.get(i+1))>0)
       {
-        swap(array,i,i+1);
+        swap(database,i,i+1);
         isSorted=false;
       }
     return isSorted;
@@ -261,10 +260,10 @@ public class Exercise1
    * @param array
    * @param length
    */
-  static <T extends Comparable<T>> void insertionSort(T[] array, int length)
+  static <T extends Comparable<T>> void insertionSort(ArrayList <Track> database)
   {
-    assert array!=null : "array should be initialized";
-    for(int i=0;i<length;i++)
-      insert(array,i,array[i]);
+    assert database!=null : " should be initialized";
+    for(int i=0;i<database.size();i++)
+      insert(database,i,database.get(i));
   }
 }
