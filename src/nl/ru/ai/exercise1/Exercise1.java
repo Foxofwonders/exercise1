@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Exercise1
 {
-  private static final String DATABASE_FILENAME="songstest";
+  private static final String DATABASE_FILENAME="songs.txt";
   /*
    * Here we go
    */

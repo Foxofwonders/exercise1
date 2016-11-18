@@ -21,7 +21,18 @@ public class Track implements Comparable<Track>
 	  {
 		  if (cd.compareTo(other.cd)==0)
 		  {
-			  //Compare years
+			  if(year==other.year)
+			  {
+				  if(track<other.track)
+				  {
+					  return -1;
+				  } 
+				  else 
+				  {
+					  return 1;
+				  }
+				  
+			  }
 		  }
 		  return cd.compareTo(other.cd);
 	  }
