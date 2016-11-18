@@ -147,18 +147,7 @@ public class Exercise1
         return i;
     return slice.upto;
   }
-  /**
-   * Shifts all elements in the slice one position to the right
-   * @param array
-   * @param slice
-   */
- /* static <T extends Comparable<T>> void shiftRight(ArrayList <T> array, Slice slice)
-  {
-    assert array!=null : "Array should be initialized";
-    assert slice.isValid()&&slice.from<array.size() : "Slice should be valid";
-    for(int i=slice.upto;i>slice.from;i--)
-      array.set(i,array.get(i-1));
-  }*/
+ 
   /**
    * Insert an element to a sorted array and keep it sorted
    * @param array
@@ -166,15 +155,14 @@ public class Exercise1
    * @param y element to be added
    * @return new length
    */
-  static <T extends Comparable<T>> int insert(ArrayList <T> array, int length, T y)
+  static <T extends Comparable<T>> void insert(ArrayList <T> array, int length, T y)
   {
     assert array!=null : "ArrayList should be initialized";
     assert array.size()>=0 : "Length cannot be negative";
     assert isSorted(array,new Slice(0,length)) : "ArrayList should be sorted";
     int position=findInsertPosition(array,new Slice(0,length),y);
-    shiftRight(array,new Slice(position,length));
-    array.set(position,y);
-    return array.size()+1;
+    array.add(position,y);
+    array.remove(length);
   }
   /**
    * Swap two elements in an array
