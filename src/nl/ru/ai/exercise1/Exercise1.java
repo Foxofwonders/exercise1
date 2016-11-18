@@ -171,10 +171,10 @@ public class Exercise1
     assert array!=null : "ArrayList should be initialized";
     assert array.size()>=0 : "Length cannot be negative";
     assert isSorted(array,new Slice(0,length)) : "ArrayList should be sorted";
-    
     int position=findInsertPosition(array,new Slice(0,length),y);
-    array.add(position,y);
-    return array.size();
+    shiftRight(array,new Slice(position,length));
+    array.set(position,y);
+    return array.size()+1;
   }
   /**
    * Swap two elements in an array
