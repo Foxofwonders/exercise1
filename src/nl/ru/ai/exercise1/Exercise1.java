@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Exercise1
 {
-  private static final String DATABASE_FILENAME="songs.txt";
+  private static final String DATABASE_FILENAME="songstest";
   /*
    * Here we go
    */
@@ -162,7 +162,7 @@ public class Exercise1
     assert isSorted(array,new Slice(0,length)) : "ArrayList should be sorted";
     int position=findInsertPosition(array,new Slice(0,length),y);
     array.add(position,y);
-    array.remove(length);
+    array.remove(length+1);
   }
   /**
    * Swap two elements in an array
