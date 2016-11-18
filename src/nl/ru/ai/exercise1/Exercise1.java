@@ -88,9 +88,8 @@ public class Exercise1
     return choice;
   }
   /**
-   * Reads the cd database from the file 'songs.txt' into the specified track array
+   * Reads the cd database from the file 'songs.txt' into the specified track arraylist
    * @param database this is the database that will be filled with the input.
-   * @return number of tracks read
    * @throws FileNotFoundException 
    */
   static void readDatabase(ArrayList <Track> database) throws FileNotFoundException
@@ -114,106 +113,106 @@ public class Exercise1
     }
     scanner.close();
   }
-  /*************** Auxiliary array routines from lecture ***************/
+ 
   /**
-   * Checks if the slice of the specified array is sorted
-   * @param array
+   * Checks if the slice of the specified ArrayList is sorted
+   * @param ArrayList
    * @param slice
-   * @return true if the slice of the array is in ascending order, false otherwise
+   * @return true if the slice of the ArrayList is in ascending order, false otherwise
    */
-  static <T extends Comparable<T>> boolean isSorted(ArrayList <T> array, Slice slice)
+  static <T extends Comparable<T>> boolean isSorted(ArrayList <T> arraylist, Slice slice)
   {
-    assert array!=null : "Array should be initialized";
+    assert arraylist!=null : "Array should be initialized";
     assert slice.isValid() : "Slice should be valid";
     for(int i=slice.from;i<slice.upto-1;i++)
-      if(array.get(i).compareTo(array.get(i+1))>0)
+      if(arraylist.get(i).compareTo(arraylist.get(i+1))>0)
         return false;
     return true;
   }
+  
   /**
-   * Find position in array slice where to insert new element
-   * @param array
+   * Find position in ArrayList slice where to insert new element
+   * @param ArrayList
    * @param slice
    * @param y element for which the position should be returned
    * @return position where to insert
    */
-  static <T extends Comparable<T>> int findInsertPosition(ArrayList <T> array, Slice slice, T y)
+  static <T extends Comparable<T>> int findInsertPosition(ArrayList <T> arraylist, Slice slice, T y)
   {
-    assert array!=null : "Array should be initialized";
+    assert arraylist!=null : "Array should be initialized";
     assert slice.isValid() : "Slice should be valid";
-    assert isSorted(array,slice);
+    assert isSorted(arraylist,slice);
     for(int i=slice.from;i<slice.upto;i++)
-      if(array.get(i).compareTo(y)>=0)
+      if(arraylist.get(i).compareTo(y)>=0)
         return i;
     return slice.upto;
   }
  
   /**
-   * Insert an element to a sorted array and keep it sorted
-   * @param array
-   * @param length length
+   * Insert an element to a sorted ArrayList and keep it sorted
+   * @param ArrayList
+   * @param length of slice
    * @param y element to be added
-   * @return new length
    */
-  static <T extends Comparable<T>> void insert(ArrayList <T> array, int length, T y)
+  static <T extends Comparable<T>> void insert(ArrayList <T> arraylist, int length, T y)
   {
-    assert array!=null : "ArrayList should be initialized";
-    assert array.size()>=0 : "Length cannot be negative";
-    assert isSorted(array,new Slice(0,length)) : "ArrayList should be sorted";
-    int position=findInsertPosition(array,new Slice(0,length),y);
-    array.add(position,y);
-    array.remove(length+1);
+    assert arraylist!=null : "ArrayList should be initialized";
+    assert arraylist.size()>=0 : "Length cannot be negative";
+    assert isSorted(arraylist,new Slice(0,length)) : "ArrayList should be sorted";
+    int position=findInsertPosition(arraylist,new Slice(0,length),y);
+    arraylist.add(position,y);
+    arraylist.remove(length+1);
   }
   /**
-   * Swap two elements in an array
-   * @param array
+   * Swap two elements in an ArrayList
+   * @param ArrayList
    * @param i
    * @param j
    */
-  private static <T extends Comparable<T>> void swap(ArrayList <T> array, int i, int j)
+  private static <T extends Comparable<T>> void swap(ArrayList <T> arraylist, int i, int j)
   {
-    assert array!=null : "Array should be initialized";
-    assert i>=0&&i<array.size() : "First index is invalid";
-    assert j>=0&&j<array.size() : "Second index is invalid";
-    T help=array.get(i);
-    array.set(i, array.get(j));
-    array.set(j, help);
+    assert arraylist!=null : "ArrayList should be initialized";
+    assert i>=0&&i<arraylist.size() : "First index is invalid";
+    assert j>=0&&j<arraylist.size() : "Second index is invalid";
+    T help=arraylist.get(i);
+    arraylist.set(i, arraylist.get(j));
+    arraylist.set(j, help);
   }
-  /*************** Array based Sorting routines from lecture ***************/
+
   /**
-   * Sorts an array in situ in ascending order using selection sort
-   * @param array
-   * @oaram length
+   * Sorts an arraylist in situ in ascending order using selection sort
+   * @param arraylist
+   * 
    */
-  static <T extends Comparable<T>> void selectionSort(ArrayList <T> array)
+  static <T extends Comparable<T>> void selectionSort(ArrayList <T> arraylist)
   {
-    assert array!=null : "array should be initialized";
-    for(int i=0;i<array.size();i++)
+    assert arraylist!=null : "arraylist should be initialized";
+    for(int i=0;i<arraylist.size();i++)
     {
-      int j=indexOfSmallestValue(array,new Slice(i,array.size()));
-      swap(array,i,j);
+      int j=indexOfSmallestValue(arraylist,new Slice(i,arraylist.size()));
+      swap(arraylist,i,j);
     }
   }
   /**
    * Finds index of smallest value in array slice
-   * @param array
+   * @param arraylist
    * @param slice
    * @return index of smallest value
    */
-  static <T extends Comparable<T>> int indexOfSmallestValue(ArrayList <T> array, Slice slice)
+  static <T extends Comparable<T>> int indexOfSmallestValue(ArrayList <T> arraylist, Slice slice)
   {
-    assert array!=null : "Array should be initialized";
-    assert slice.isValid()&&slice.upto<=array.size() : "Slice should be valid";
+    assert arraylist!=null : "Array should be initialized";
+    assert slice.isValid()&&slice.upto<=arraylist.size() : "Slice should be valid";
     assert slice.upto-slice.from>0 : "Slice should be non-empty";
     int index=slice.from;
     for(int i=slice.from+1;i<slice.upto;i++)
-      if(array.get(i).compareTo(array.get(index))<0)
+      if(arraylist.get(i).compareTo(arraylist.get(index))<0)
         index=i;
     return index;
   }
   /**
-   * Sorts an array in situ in ascending order using bubble sort
-   * @param array
+   * Sorts an arraylist in situ in ascending order using bubble sort
+   * @param arraylist
    * @param length
    */
   static <T extends Comparable<T>> void bubbleSort(ArrayList <Track> database)
@@ -224,10 +223,10 @@ public class Exercise1
         length--;
   }
   /**
-   * Swap all adjacent pairs in the array slice that are not in the right order
-   * @param array
+   * Swap all adjacent pairs in the arraylist slice that are not in the right order
+   * @param arraylist
    * @param slice
-   * @return array slice is sorted
+   * @return arraylist slice is sorted
    */
   static <T extends Comparable<T>> boolean bubble(ArrayList <Track> database, Slice slice)
   {
@@ -243,8 +242,8 @@ public class Exercise1
     return isSorted;
   }
   /**
-   * Sorts an array in situ in ascending order using insertion sort
-   * @param array
+   * Sorts an arraylist in situ in ascending order using insertion sort
+   * @param arraylist
    * @param length
    */
   static <T extends Comparable<T>> void insertionSort(ArrayList <Track> database)
