@@ -17,6 +17,14 @@ public class Track implements Comparable<Track>
   public int compareTo(Track other)
   {
     // for now, tracks are simple ordered by artist name
-    return artist.compareTo(other.artist);
+	  if (artist.compareTo(other.artist)==0)
+	  {
+		  if (cd.compareTo(other.cd)==0)
+		  {
+			  //Compare years
+		  }
+		  return cd.compareTo(other.cd);
+	  }
+	  return artist.compareTo(other.artist);
   }
 }
