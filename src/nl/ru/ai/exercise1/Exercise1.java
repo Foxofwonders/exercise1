@@ -19,8 +19,8 @@ public class Exercise1
       /*
        * Read database
        */
-      int length=readDatabase(database);
-      System.out.printf("%d songs read from datatabase '%s'\n",length,DATABASE_FILENAME);
+     readDatabase(database);
+      System.out.printf("%d songs read from datatabase '%s'\n",database.size(),DATABASE_FILENAME);
       /*
        * Ask for sorting method
        */
@@ -93,7 +93,7 @@ public class Exercise1
    * @return number of tracks read
    * @throws FileNotFoundException 
    */
-  static int readDatabase(ArrayList <Track> database) throws FileNotFoundException
+  static void readDatabase(ArrayList <Track> database) throws FileNotFoundException
   {
     FileInputStream inputStream=new FileInputStream(DATABASE_FILENAME);
     Scanner scanner=new Scanner(inputStream);
@@ -113,7 +113,6 @@ public class Exercise1
       database.add(track);
     }
     scanner.close();
-    return database.size();
   }
   /*************** Auxiliary array routines from lecture ***************/
   /**
@@ -153,13 +152,13 @@ public class Exercise1
    * @param array
    * @param slice
    */
-  static <T extends Comparable<T>> void shiftRight(ArrayList <T> array, Slice slice)
+ /* static <T extends Comparable<T>> void shiftRight(ArrayList <T> array, Slice slice)
   {
     assert array!=null : "Array should be initialized";
     assert slice.isValid()&&slice.from<array.size() : "Slice should be valid";
     for(int i=slice.upto;i>slice.from;i--)
       array.set(i,array.get(i-1));
-  }
+  }*/
   /**
    * Insert an element to a sorted array and keep it sorted
    * @param array
