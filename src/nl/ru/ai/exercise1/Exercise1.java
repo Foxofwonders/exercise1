@@ -8,8 +8,21 @@ import java.util.Scanner;
 public class Exercise1
 {
   private static final String DATABASE_FILENAME="songs.txt";
+  public static int noOfComparisons;
   /*
-   * Here we go
+   * Comparisons BubbleSort: 	11378455 duration, 	11339946 artist
+   * Comparisons InsertionSort: 5616412 duration,	11376166 artist
+   * Comparisons SelectionSort: 11383606 duration,	11383606 artist
+   * 
+   * InsertionSort makes significantly less comparisons than BubbleSort and SelectionSort when comparing based on duration.
+   * However, when sorted by artist, the number of comparisons per sorting method is roughly the same.
+   * 
+   * Selection Sort makes the most comparisons, and the number of comparisons does not depend on the type of ordering.
+   * This is because selection sort always needs to compare all elements in the unsorted array in order to find the smallest value.
+   * 
+   * InsertionSort compares the first unsorted value to all previous sorted values and inserts it where it fits.
+   * This works much better when all values to be compared are different (durations), than when the to be compared values are often the 
+   * same (artists), because it would compare the same artist to itself all the way before adding a new to-be-inserted track.
    */
   public static void main(String[] args)
   {
@@ -30,6 +43,7 @@ public class Exercise1
        * Sort 
        */
       System.out.printf("Sorting with %s\n",method);
+      noOfComparisons =0;
       switch(method)
       {
         case BUBBLE_SORT:
@@ -47,6 +61,7 @@ public class Exercise1
        * Show result
        */
       dumpDatabase(database);
+      System.out.println("Number of comparisons:"+noOfComparisons);
     }
     catch(FileNotFoundException exception)
     {

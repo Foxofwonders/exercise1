@@ -14,9 +14,9 @@ public class Track implements Comparable<Track>
  * Compare this track with an other based on artist name
  * @return -1 if this track is smaller, 0 if equal and 1 if this track is larger
  */
- 
-  /*public int compareTo(Track other)
+  public int compareTo(Track other)
   {
+	  Exercise1.noOfComparisons ++;
 	  if (artist.compareTo(other.artist)==0)
 	  {
 		  if (cd.compareTo(other.cd)==0)
@@ -38,14 +38,15 @@ public class Track implements Comparable<Track>
 	  }
 	  return artist.compareTo(other.artist);
   }
-  */
+  
   
   /**
    * Compare this track with an other based on track length
    * @return -1 if this track is smaller, 0 if equal and 1 if this track is larger
    */
-  public int compareTo(Track other)
+  /*public int compareTo(Track other)
   {
+	  Exercise1.noOfComparisons ++;
 	  if (time.compareTo(other.time)==0)
 	  {
 		  if (artist.compareTo(other.artist)==0)
@@ -67,4 +68,6 @@ public class Track implements Comparable<Track>
 	  }
   	return time.compareTo(other.time);
   }
+  */
+  
 }
