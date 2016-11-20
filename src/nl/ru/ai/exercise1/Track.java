@@ -14,60 +14,29 @@ public class Track implements Comparable<Track>
  * Compare this track with an other based on artist name
  * @return -1 if this track is smaller, 0 if equal and 1 if this track is larger
  */
-  public int compareTo(Track other)
-  {
-	  Exercise1.noOfComparisons ++;
-	  if (artist.compareTo(other.artist)==0)
-	  {
-		  if (cd.compareTo(other.cd)==0)
-		  {
-			  if(year==other.year)
-			  {
-				  if(track<other.track)
-				  {
-					  return -1;
-				  } 
-				  else 
-				  {
-					  return 1;
-				  }
-				  
-			  }
-		  }
-		  return cd.compareTo(other.cd);
-	  }
-	  return artist.compareTo(other.artist);
-  }
+//  public int compareTo(Track other)
+//  {
+//	  Exercise1.noOfComparisons ++;
+//  if (artist.compareTo(other.artist)!=0)
+//	  return artist.compareTo(other.artist);
+//  if (cd.compareTo(other.cd)!=0)
+//	  return cd.compareTo(other.cd);
+//  if (year!=other.year)
+//  {
+//	  return ((Integer)year).compareTo(other.year);
+//  }
+//  return ((Integer)track).compareTo(other.track);  
+//  }
+//}
   
   
   /**
    * Compare this track with an other based on track length
    * @return -1 if this track is smaller, 0 if equal and 1 if this track is larger
    */
-  /*public int compareTo(Track other)
+  public int compareTo(Track other)
   {
 	  Exercise1.noOfComparisons ++;
-	  if (time.compareTo(other.time)==0)
-	  {
-		  if (artist.compareTo(other.artist)==0)
-		  {
-			  if (cd.compareTo(other.cd)==0)
-			  {
-					  if(track<other.track)
-					  {
-						  return -1;
-					  } 
-					  else 
-					  {
-						  return 1;
-					  }
-			  }
-			  return cd.compareTo(other.cd);
-		  }
-		  return artist.compareTo(other.artist);
-	  }
-  	return time.compareTo(other.time);
+	  return time.compareTo(other.time);
   }
-  */
-  
 }
