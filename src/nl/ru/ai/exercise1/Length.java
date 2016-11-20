@@ -23,4 +23,31 @@ public class Length
   {
     return String.format("%d:%02d",minutes,seconds);
   }
+  
+public int compareTo(Length other) 
+	{
+		if (minutes==other.minutes)
+		{
+			if( seconds<other.seconds)
+			{
+			return -1;
+			}
+			else if( seconds>other.seconds)
+			{
+			return 1;
+			}
+			else 
+			{
+			return 0;
+			}
+		}
+		if(minutes<other.minutes)
+		{
+		return -1;
+		}
+		else
+		{
+		return 1;
+		}
+	}
 }
