@@ -10,8 +10,8 @@ public class Exercise1
   private static final String DATABASE_FILENAME="songs.txt";
   public static int noOfComparisons;
   /*
-   * Comparisons BubbleSort: 	11378455 duration, 	11339946 artist
-   * Comparisons InsertionSort: 5616412 duration,	11376166 artist
+   * Comparisons BubbleSort: 	11378455 duration, 	161653 artist
+   * Comparisons InsertionSort: 5585402 duration,	11376166 artist
    * Comparisons SelectionSort: 11383606 duration,	11383606 artist
    * 
    * InsertionSort makes significantly less comparisons than BubbleSort and SelectionSort when comparing based on duration.
@@ -22,7 +22,14 @@ public class Exercise1
    * 
    * InsertionSort compares the first unsorted value to all previous sorted values and inserts it where it fits.
    * This works much better when all values to be compared are different (durations), than when the to be compared values are often the 
-   * same (artists), because it would compare the same artist to itself all the way before adding a new to-be-inserted track.
+   * same (artists), because it would compare the same artist to itself (in the sorted list) all the way before adding a new to-be-inserted
+   * track. Note that this effect disappears when the order of the tracks in the original file is descending (because the new track can
+   * then be added to the beginning of the list of that artist). 
+   * However, the tracks in the original file are (at least mostly) in ascending order.
+   * 
+   * BubbleSort is much, more more efficient when sorting by artist than when sorting by duration. This is because the distribution of
+   * track lengths is more or less random, whether in the original file, most tracks are already in order of artist, which means bubble-
+   * sort has very little tracks it needs to swap.
    */
   public static void main(String[] args)
   {
