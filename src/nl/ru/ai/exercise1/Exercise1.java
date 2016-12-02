@@ -1,8 +1,13 @@
 package nl.ru.ai.exercise1;
-
+/**
+ * @author Denise van Baalen (s4708237)
+ * @author Anna Gansen (s4753755)
+ */
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Exercise1
@@ -62,6 +67,10 @@ public class Exercise1
         case SELECTION_SORT:
           selectionSort(database);
           break;
+          //  To sort in the order of Track length, change compareTo-function in Track.java
+        case HEAP_SORT:
+            heapSort(database);
+            break;
       }
       System.out.println("Sorted!");
       /*
@@ -75,7 +84,90 @@ public class Exercise1
       System.out.printf("Error opening database file '%s': file not found\n",DATABASE_FILENAME);
     }
   }
-  private static void dumpDatabase(ArrayList <Track> database)
+
+	
+  /**
+   * Sorts an array using heap sort.
+   * @param database
+   */
+  static <T extends Comparable<T>> void heapSort(ArrayList<Track> database)
+  {
+    assert database!=null : "ArrayList should be initialized";
+    buildHeap(database);
+    pickHeap(database);
+  }
+  /**
+   * Turns an ArrayList into a heap.
+   * @param database
+   */
+  private static <T extends Comparable<T>>void buildHeap(ArrayList<T> database)
+  {
+    assert database!=null : "Source array should be initialized";
+    for(int i=1;i<database.size();i++)
+    {
+      pushUp(i,database);
+    }
+  }
+  /**
+   * Swaps an element with its parent as long as its bigger than its parent.
+   * @param i
+   * @param database
+   */
+  private static <T extends Comparable<T>> void pushUp(int i, ArrayList<T> database)
+  {
+    assert database!=null : "Source array should be initialized";
+    while(database.get(i).compareTo(database.get((i-1)/2))>0 && i>0)
+    {
+      T save=database.get((i-1)/2);
+      database.set((i-1)/2,database.get(i));
+      database.set(i,save);
+      i=(i-1)/2;
+    }
+  }
+  /**
+   * Sorts the arrayList from heap to min-to-max sorting.
+   * @param database
+   */
+  private static <T extends Comparable<T>>void pickHeap(ArrayList<T> database)
+  {
+    assert database!=null : "Source array should be initialized";
+    for(int i=database.size()-1;i>0;i--)
+    {
+      swap(database, 0,i);
+      pushDown(database,i);
+    }
+  }
+  /**
+   * Swaps an element with its biggest child as long as it's smaller than one of its children.
+   * To be applied after moving the biggest element to the last spot.
+   * @param sorted
+   * @param source
+   */
+  private static <T extends Comparable<T>>void pushDown(ArrayList<T> source, int sorted)
+  {
+    assert source!=null : "Source array should be initialized";
+    int parent=0;
+    while(((2*parent+1<sorted&&source.get(parent).compareTo(source.get(2*parent+1))<0)||(2*parent+2<sorted&&source.get(parent).compareTo(source.get(2*parent+2))<0)))
+    {
+      if(source.get(2*parent+1).compareTo(source.get(2*parent+2))>0||2*parent+2>=sorted)
+      {
+        T save=source.get(parent);
+        source.set(parent,source.get(2*parent+1));
+        source.set(2*parent+1,save);
+        parent=((2*parent)+1);
+      } else
+      {
+        T save=source.get(parent);
+        source.set(parent,source.get(2*parent+2));
+        source.set(2*parent+2,save);
+        parent=((2*parent)+2);
+      }
+    }
+  }
+
+  
+  
+private static void dumpDatabase(ArrayList <Track> database)
   {
     for(int i=0;i<database.size();i++)
     {
@@ -144,7 +236,7 @@ public class Exercise1
    */
   static <T extends Comparable<T>> boolean isSorted(ArrayList <T> arraylist, Slice slice)
   {
-    assert arraylist!=null : "Array should be initialized";
+    assert arraylist!=null : "ArrayList should be initialized";
     assert slice.isValid() : "Slice should be valid";
     for(int i=slice.from;i<slice.upto-1;i++)
       if(arraylist.get(i).compareTo(arraylist.get(i+1))>0)
@@ -223,7 +315,7 @@ public class Exercise1
    */
   static <T extends Comparable<T>> int indexOfSmallestValue(ArrayList <T> arraylist, Slice slice)
   {
-    assert arraylist!=null : "Array should be initialized";
+    assert arraylist!=null : "ArrayList should be initialized";
     assert slice.isValid()&&slice.upto<=arraylist.size() : "Slice should be valid";
     assert slice.upto-slice.from>0 : "Slice should be non-empty";
     int index=slice.from;
@@ -270,7 +362,7 @@ public class Exercise1
    */
   static <T extends Comparable<T>> void insertionSort(ArrayList <Track> database)
   {
-    assert database!=null : " should be initialized";
+    assert database!=null : "ArrayList should be initialized";
     for(int i=0;i<database.size();i++)
       insert(database,i,database.get(i));
   }

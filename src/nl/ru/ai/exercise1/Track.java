@@ -14,27 +14,36 @@ public class Track implements Comparable<Track>
  * Compare this track with an other based on artist name
  * @return -1 if this track is smaller, 0 if equal and 1 if this track is larger
  */
-//  public int compareTo(Track other)
-//  {
-//	  Exercise1.noOfComparisons ++;
-//  if (artist.compareTo(other.artist)!=0)
-//	  return artist.compareTo(other.artist);
-//  if (cd.compareTo(other.cd)!=0)
-//	  return cd.compareTo(other.cd);
-//  if (year!=other.year)
-//  {
-//	  return ((Integer)year).compareTo(other.year);
-//  }
-//  return ((Integer)track).compareTo(other.track);  
-//  }
-//}
+  public int compareTo(Track other)
+  {
+    assert other!=null : "Undefined other track.";
+    assert this !=null : "This track is undefined.";
+    Exercise1.noOfComparisons++;
+    {
+      if(artist.toLowerCase().compareTo(other.artist.toLowerCase())==0)
+        if(year==other.year)
+          if(cd.toLowerCase().compareTo(other.cd.toLowerCase())==0)
+            if(track<other.track)
+              return -1;
+            else
+              return 1;
+          else return cd.toLowerCase().compareTo(other.cd.toLowerCase());
+        else if(year<other.year)
+          return -1;
+        else
+          return 1;
+      else return artist.toLowerCase().compareTo(other.artist.toLowerCase());
+    }
+  }
+
+
   
   
   /**
    * Compare this track with an other based on track length
    * @return -1 if this track is smaller, 0 if equal and 1 if this track is larger
    */
-  public int compareTo(Track other)
+  public int compareTo1(Track other)
   {
 	  Exercise1.noOfComparisons ++;
 	  return time.compareTo(other.time);
